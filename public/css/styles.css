@@ -7,6 +7,6 @@ body {
 
 #localVideo {
 	height : 30%;
-	width  : 40%;
+	width  : calc(30% * 1.834);
 	border : 2px solid #ddd;
 }
