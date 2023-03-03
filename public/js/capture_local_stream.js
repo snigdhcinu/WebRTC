@@ -1,5 +1,3 @@
-(async () => await main ())();
-
 async function main () {
 	// playAudioFromMic selected.
 	// update deviceSelection with fetched list.
@@ -49,3 +47,5 @@ async function _handleDeviceChanges (event) {
 	// update deviceSelection with the new list.
 	const newList = _fetchDevicesList ();
 }
+
+module.exports = main;
