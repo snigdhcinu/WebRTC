@@ -4,11 +4,12 @@
  STEP 3 : Ready the connection between peers, share ICE candidates b/w peers.
 */
 
-const signalingChannel = new signalingChannel (remoteClientId);
+// TODO : yet to implement a signaling channel
+const signalingChannel = new SignalingChannel (remoteClientId);
 
 signalingChannel.send ('Hello Peer');
 
-async function makeCall () {
+async function establistPeerConnection () {
     // TODO: Create you own stun server, do not use open stun servers.
     const configuration = {
         "iceServers" : [{
@@ -63,3 +64,5 @@ peerConnection.addEventListener('connectionstatechange', (event) => {
         console.log ('Peers connected');
     }
 });
+
+//module.exports = establistPeerConnection;
