@@ -1,18 +1,17 @@
 // TODO: add logic for device-selection.
 // TODO: instead of creating new copies of data, import from single source.
+// TODO: handleDeviceChange event.
+// TODO: add ability to individually handle A/V tracks.
 
-async function main () {
-	// playAudioFromMic selected.
-	// update deviceSelection with fetched list.
-	// addEventListener for `deviceChange`
+async function main (peerConnection) {
 	const deviceKinds = ['audioinput', 'audiooutput', 'videoinput'];
 	const devicesList = await _fetchDevicesList (deviceKinds);
-	const videoStream = await _playVideoFromCamera (devicesList.videoinput);
+	const videoStream = await _playVideoFromCamera (devicesList.videoinput, peerConnection);
 
 	navigator.mediaDevices.addEventListener ('devicechange', _handleDeviceChanges);
 }
 
-async function _playVideoFromCamera (videoDevices) {
+async function _playVideoFromCamera (videoDevices, peerConnection) {
 	try {
 		const constraints = {
 			'audio': true,
@@ -30,12 +29,6 @@ async function _playVideoFromCamera (videoDevices) {
 		videoElement.srcObject = localStream;
 
 		// addTracks to peerConnection
-		const iceConfig = {
-			"iceServers" : [{
-				"urls" : 'stun:stun.l.google.com:19302',
-			}]
-		};
-		const peerConnection = new RTCPeerConnection (iceConfig);
 		localStream.getTracks().forEach(track => {
 			peerConnection.addTrack(track, localStream);
 		});
@@ -64,4 +57,4 @@ async function _handleDeviceChanges (event) {
 	const newList = _fetchDevicesList ();
 }
 
-//module.exports = main;
+export { iceConfig, main };

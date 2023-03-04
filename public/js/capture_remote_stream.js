@@ -1,16 +1,11 @@
-// TODO: after using webpacks, perform single source of truth.
-const remoteVideo = document.querySelector('#remoteVideo');
+const main = (peerConnection) => {
+    const remoteVideo = document.querySelector('#remoteVideo');
 
-// addTracks to peerConnection
-const iceConfig = {
-    "iceServers" : [{
-        "urls" : 'stun:stun.l.google.com:19302',
-    }]
-};
+    // attach incoming track on peerConnection to remoteVideo
+    peerConnection.addEventListener('track', async (event) => {
+        const [remoteStream] = event.streams;
+        remoteVideo.srcObject = remoteStream;
+    });
+}
 
-const peerConnection = new RTCPeerConnection (iceConfig);
-
-peerConnection.addEventListener('track', async (event) => {
-    const [remoteStream] = event.streams;
-    remoteVideo.srcObject = remoteStream;
-});
+export { main };
