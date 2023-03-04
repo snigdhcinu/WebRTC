@@ -9,16 +9,7 @@ const signalingChannel = new SignalingChannel (remoteClientId);
 
 signalingChannel.send ('Hello Peer');
 
-async function establistPeerConnection () {
-    // TODO: Create you own stun server, do not use open stun servers.
-    const configuration = {
-        "iceServers" : [{
-            "urls" : 'stun:stun.l.google.com:19302',
-        }]
-    }
-
-    const peerConnection = new RTCPeerConnection (configuration);
-
+async function establishPeerConnection (peerConnection) {
     signalingChannel.addEventListener ('message', async (message) => {
         // For Receiving side
         if (message.offer) {
@@ -65,4 +56,4 @@ peerConnection.addEventListener('connectionstatechange', (event) => {
     }
 });
 
-//module.exports = establistPeerConnection;
+module = { establishPeerConnection }
